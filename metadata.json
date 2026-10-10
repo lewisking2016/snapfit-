@@ -1,0 +1,6 @@
+{
+  "name": "Athletic Telemetry",
+  "description": "Kinetic minimalist telemetry blueprint & multi-screen athletic conditioning system with live workout tracking, audio coaching, recovery metrics, and device sync.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
