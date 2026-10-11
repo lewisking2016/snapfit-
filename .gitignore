@@ -6,3 +6,67 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Large third-party clones (illustrations / reference)
+vendor/
+
+# Agent skill copies — ONLY .agents/skills is canonical.
+# Do not use `npx skills add --all` in this repo; it clones into 70+ tool folders.
+# Prefer: npx skills add <pkg> --agent '*' --copy -y  then keep only .agents,
+# or install with a single agent target that writes under .agents.
+skills/
+agent/
+data/skills/
+.claude/skills/
+.cursor/skills/
+.codex/skills/
+.continue/skills/
+.windsurf/skills/
+.goose/skills/
+.roo/skills/
+.aider-desk/
+.adal/
+.augment/
+.autohand/
+.bob/
+.codeartsdoer/
+.codebuddy/
+.codemaker/
+.codestudio/
+.commandcode/
+.cortex/
+.crush/
+.devin/
+.forge/
+.fx/
+.grok/
+.hermes/
+.iflow/
+.inferencesh/
+.jazz/
+.junie/
+.kimchi/
+.kiro/
+.kode/
+.lingma/
+.mcpjam/
+.minimax/
+.moxby/
+.mux/
+.neovate/
+.ona/
+.openhands/
+.pochi/
+.posit/
+.qoder/
+.qwen/
+.reasonix/
+.rovodev/
+.tabnine/
+.terramind/
+.tinycloud/
+.trae/
+.vibe/
+.zcode/
+.zencoder/
+

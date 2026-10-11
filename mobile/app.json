@@ -1,0 +1,52 @@
+{
+  "expo": {
+    "name": "Kinn",
+    "slug": "kinn",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/kinn-app-icon.png",
+    "scheme": "kinn",
+    "userInterfaceStyle": "dark",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "app.kinn.mobile",
+      "infoPlist": {
+        "NSHealthShareUsageDescription": "Kinn uses your workout and activity data from Apple Health so you and your friends can train together.",
+        "NSHealthUpdateUsageDescription": "Kinn can save workouts you log to Apple Health."
+      }
+    },
+    "android": {
+      "package": "app.kinn.mobile",
+      "adaptiveIcon": {
+        "backgroundColor": "#0D1014",
+        "foregroundImage": "./assets/images/kinn-mark-dark.png",
+        "monochromeImage": "./assets/images/kinn-mark-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/images/kinn-app-icon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#0D1014",
+          "image": "./assets/images/kinn-mark-dark.png",
+          "imageWidth": 120
+        }
+      ],
+      "expo-audio",
+      "expo-font",
+      "expo-build-properties",
+      "react-native-health-connect",
+      "@kingstinct/react-native-healthkit"
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}

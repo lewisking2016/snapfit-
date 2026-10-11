@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kinn splash screen and loading bar</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--page:#F7F8F6;--text:#0D1014;--muted:#5F6873;--line:#E1E4E0;--card:#FFFFFF;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page:#0A0C0F;--text:#F7F8F6;--muted:#9AA3AD;--line:#2A313A;--card:#14181D}}
+:root[data-theme="dark"]{--page:#0A0C0F;--text:#F7F8F6;--muted:#9AA3AD;--line:#2A313A;--card:#14181D}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text);font-family:'DM Sans',system-ui,sans-serif;line-height:1.5}
+.wrap{max-width:1000px;margin:0 auto;padding:40px 20px 56px}
+h1,h2{font-family:Sora,system-ui,sans-serif;letter-spacing:-.03em;margin:0}
+h1{font-size:32px}
+h2{font-size:20px;margin-bottom:6px}
+p{margin:0;color:var(--muted)}
+section{margin-top:44px}
+.row{display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start;margin-top:20px}
+
+/* splash */
+.phone{width:280px;height:560px;border-radius:40px;background:#0D1014;border:1px solid var(--line);overflow:hidden;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none}
+.lock{width:220px;display:block}
+.tag{font-family:Sora,sans-serif;font-weight:600;font-size:17px;color:#C6F24E;margin-top:18px;letter-spacing:-.01em}
+.glow{position:absolute;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(198,242,78,.16),rgba(198,242,78,0) 65%);top:120px}
+.rings circle,.lt{transform-box:fill-box;transform-origin:center}
+.rings circle,.lt{stroke-dasharray:1;stroke-dashoffset:0}
+.play .rl{animation:rl .9s cubic-bezier(.2,.8,.2,1) .2s backwards}
+.play .rr{animation:rr .9s cubic-bezier(.2,.8,.2,1) .2s backwards}
+.play .lens{animation:lens .6s cubic-bezier(.3,1.6,.5,1) .95s backwards}
+.play .lt{animation:draw .45s ease-out backwards}
+.play .dot{animation:pop .3s cubic-bezier(.3,1.6,.5,1) 1.75s backwards}
+.play .tag{animation:rise .6s ease-out 2.1s backwards}
+.play .glow{animation:fade 1.2s ease-out 1s backwards}
+.lens,.dot{transform-box:fill-box;transform-origin:center}
+@keyframes rl{from{transform:translateX(-34px);stroke-dashoffset:1;opacity:0}}
+@keyframes rr{from{transform:translateX(34px);stroke-dashoffset:1;opacity:0}}
+@keyframes lens{from{transform:scale(0);opacity:0}}
+@keyframes draw{from{stroke-dashoffset:1;opacity:0}}
+@keyframes pop{from{transform:scale(0)}}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}}
+@keyframes fade{from{opacity:0}}
+.btn{min-height:44px;padding:0 22px;border:0;border-radius:12px;background:#C6F24E;color:#0D1014;font:500 16px 'DM Sans',sans-serif;cursor:pointer}
+.btn:focus-visible{outline:2px solid var(--text);outline-offset:2px}
+.spec{flex:1;min-width:260px}
+.spec table{border-collapse:collapse;width:100%;margin:14px 0 20px;font-size:15px}
+.spec td,.spec th{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+.spec th{color:var(--muted);font-weight:500;font-size:13px}
+
+/* loaders */
+.panel{border-radius:20px;padding:24px;width:100%;max-width:440px}
+.dark{background:#0D1014;color:#F7F8F6}
+.light{background:#FFFFFF;color:#0D1014;border:1px solid var(--line)}
+.lab{font-size:13px;letter-spacing:.12em;text-transform:uppercase;opacity:.65;margin-bottom:14px}
+.top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;font-size:15px}
+.pct{font-family:Sora,sans-serif;font-weight:700;font-size:28px;letter-spacing:-.03em}
+.track{height:8px;border-radius:4px;background:#1B2027;overflow:hidden;position:relative}
+.light .track{background:#E1E4E0}
+.fill{height:100%;width:0;border-radius:4px;background:#C6F24E;position:relative;overflow:hidden}
+.light .fill{background:#0D1014}
+.fill::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);transform:translateX(-100%);animation:shine 1.4s linear infinite}
+.light .fill::after{background:linear-gradient(90deg,transparent,rgba(198,242,78,.7),transparent)}
+@keyframes shine{to{transform:translateX(100%)}}
+.ind{position:absolute;top:0;bottom:0;width:38%;border-radius:4px;background:#C6F24E;animation:slide 1.3s cubic-bezier(.65,0,.35,1) infinite}
+@keyframes slide{from{left:-40%}to{left:102%}}
+.spin{width:64px;height:64px;color:#F7F8F6;display:block}
+.spin .g{transform-origin:50px 50px;animation:spin 1.8s cubic-bezier(.65,0,.35,1) infinite}
+.spin .ln{transform-box:fill-box;transform-origin:center;animation:beat .9s ease-in-out infinite alternate}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes beat{from{transform:scale(.7)}to{transform:scale(1.05)}}
+.center{display:flex;align-items:center;gap:18px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Kinn splash and loading bar</h1>
+<p>Both are plain SVG and CSS, so they run in any web view and are easy to rebuild natively.</p>
+
+<section>
+<h2>1. Splash screen</h2>
+<p>Two rings slide together, the lime lens pops, the name draws in, then the tagline rises.</p>
+<div class="row">
+<div>
+<div class="phone play" id="stage" role="img" aria-label="Kinn splash animation">
+<div class="glow"></div>
+<svg class="lock" viewBox="0 0 260 240" aria-hidden="true">
+<g transform="translate(80 0)">
+<path class="lens" d="M50 26.94A26 26 0 0 0 50 73.06A26 26 0 0 0 50 26.94Z" fill="#C6F24E"/>
+<g class="rings" fill="none" stroke="#F7F8F6" stroke-width="7">
+<circle class="rl" cx="38" cy="50" r="26" pathLength="1"/>
+<circle class="rr" cx="62" cy="50" r="26" pathLength="1"/>
+</g>
+</g>
+<g transform="translate(14 125)" fill="none" stroke="#F7F8F6" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
+<path class="lt" pathLength="1" style="animation-delay:1.2s" d="M7 7V93"/>
+<path class="lt" pathLength="1" style="animation-delay:1.3s" d="M50 47L7 72M24 61L52 93"/>
+<path class="lt" pathLength="1" style="animation-delay:1.45s" d="M82 47V93"/>
+<circle class="dot" cx="82" cy="7" r="5" fill="#C6F24E" stroke="none"/>
+<path class="lt" pathLength="1" style="animation-delay:1.55s" d="M120 93V58C120 48 127 46 140 46C153 46 160 50 160 60V93"/>
+<path class="lt" pathLength="1" style="animation-delay:1.7s" d="M185 93V58C185 48 192 46 205 46C218 46 225 50 225 60V93"/>
+</g>
+</svg>
+<div class="tag">Move together.</div>
+</div>
+</div>
+<div class="spec">
+<button class="btn" id="replay" type="button">Replay splash</button>
+<table>
+<tr><th>Moment</th><th>Time</th></tr>
+<tr><td>Rings slide in and draw</td><td>0.2 – 1.1 s</td></tr>
+<tr><td>Lime lens pops</td><td>0.95 – 1.55 s</td></tr>
+<tr><td>Letters draw, one by one</td><td>1.2 – 2.15 s</td></tr>
+<tr><td>Tagline rises</td><td>2.1 – 2.7 s</td></tr>
+</table>
+<p>Background Ink #0D1014, rings Paper #F7F8F6, lens and dot Lime #C6F24E. Total about 2.7 seconds. Do not hold it longer than the app needs: if the app is ready sooner, fade out after the lens pops. When Reduce Motion is on, show the finished logo with no movement.</p>
+</div>
+</div>
+</section>
+
+<section>
+<h2>2. Loading bars</h2>
+<p>Use the progress bar when you know the percentage and the sliding bar when you do not. Dark screens use Lime, and light screens use Ink, because Lime on white is hard to see.</p>
+<div class="row">
+<div class="panel dark">
+<div class="lab">Progress, dark</div>
+<div class="top"><span id="msg">Connecting your watch</span><span class="pct" id="pct">0%</span></div>
+<div class="track" role="progressbar" aria-label="Loading" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="pb"><div class="fill" id="fill"></div></div>
+</div>
+<div class="panel light">
+<div class="lab">Progress, light</div>
+<div class="top"><span id="msg2">Connecting your watch</span><span class="pct" id="pct2">0%</span></div>
+<div class="track" role="progressbar" aria-label="Loading" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="pb2"><div class="fill" id="fill2"></div></div>
+</div>
+<div class="panel dark">
+<div class="lab">Unknown wait</div>
+<div class="top"><span>Finding your friends</span></div>
+<div class="track" role="progressbar" aria-label="Loading"><div class="ind"></div></div>
+</div>
+<div class="panel dark">
+<div class="lab">Mini spinner</div>
+<div class="center">
+<svg class="spin" viewBox="0 0 100 100" role="img" aria-label="Loading">
+<g class="g">
+<path class="ln" d="M50 26.94A26 26 0 0 0 50 73.06A26 26 0 0 0 50 26.94Z" fill="#C6F24E"/>
+<circle cx="38" cy="50" r="26" fill="none" stroke="currentColor" stroke-width="7"/>
+<circle cx="62" cy="50" r="26" fill="none" stroke="currentColor" stroke-width="7"/>
+</g>
+</svg>
+<span>Loading. Used for pull to refresh and buttons.</span>
+</div>
+</div>
+</div>
+<p style="margin-top:18px">Bar: 8 px tall, fully rounded, with a soft shine that moves across the fill. Numbers use Sora Bold, and messages use DM Sans. Change the message as the work changes (Connecting your watch, Syncing workouts, Finding your friends).</p>
+</section>
+</div>
+<script>
+(function(){
+var stage=document.getElementById('stage');
+document.getElementById('replay').addEventListener('click',function(){
+stage.classList.remove('play');void stage.offsetWidth;stage.classList.add('play');
+});
+var msgs=['Connecting your watch','Syncing workouts','Finding your friends','Almost ready'];
+var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function bar(f,p,m,pb){
+var fill=document.getElementById(f),pct=document.getElementById(p),msg=document.getElementById(m),box=document.getElementById(pb);
+function set(v){v=Math.round(v);fill.style.width=v+'%';pct.textContent=v+'%';box.setAttribute('aria-valuenow',v);msg.textContent=msgs[Math.min(3,Math.floor(v/26))];}
+if(reduce){set(72);return;}
+var t0=null,dur=3600,hold=900;
+function ease(x){return x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2;}
+function tick(ts){if(t0===null)t0=ts;var e=ts-t0;
+if(e<dur){set(ease(e/dur)*100);}
+else if(e<dur+hold){set(100);}
+else{t0=ts;}
+requestAnimationFrame(tick);}
+requestAnimationFrame(tick);
+}
+bar('fill','pct','msg','pb');
+bar('fill2','pct2','msg2','pb2');
+})();
+</script>
+</body>
+</html>
