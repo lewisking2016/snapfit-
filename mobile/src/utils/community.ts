@@ -8,6 +8,11 @@ export type CommunityItem = {
   circle: CommunityCircle;
 };
 
+export type StoryViewer = {
+  id: string;
+  name: string;
+};
+
 export type CommunityModerationReason = 'harassment' | 'spam' | 'unsafe' | 'other';
 
 export type CommunityModerationQueueEntry = {
@@ -56,6 +61,13 @@ export function summarizeCircleAssignments(assignments: CircleAssignments) {
   });
 
   return summary;
+}
+
+export function summarizeStoryViewers(viewers: readonly StoryViewer[]) {
+  return {
+    total: viewers.length,
+    recent: viewers.slice(0, 3).map((viewer) => viewer.name),
+  };
 }
 
 export function filterVisibleCommunityItems<T extends CommunityItem>(

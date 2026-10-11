@@ -10,6 +10,7 @@ import { useCommunityStore, type ReportReason } from '@/store/community-store';
 import {
   buildModerationQueueSummary,
   filterVisibleCommunityItems,
+  summarizeStoryViewers,
   type CommunityCircleFilter,
 } from '@/utils/community';
 
@@ -33,9 +34,37 @@ const CIRCLES: { id: CommunityCircleFilter; label: string }[] = [
 ];
 
 const STORIES = [
-  { id: 'amina', name: 'Amina', detail: 'Upper push · 2h' },
-  { id: 'lewis', name: 'Lewis', detail: 'Recovery · 4h' },
-  { id: 'kamau', name: 'Kamau', detail: '5 km run · 5h' },
+  {
+    id: 'amina',
+    name: 'Amina',
+    detail: 'Upper push · 2h',
+    viewers: [
+      { id: 'leo', name: 'Leo' },
+      { id: 'maya', name: 'Maya' },
+      { id: 'nora', name: 'Nora' },
+      { id: 'sam', name: 'Sam' },
+    ],
+  },
+  {
+    id: 'lewis',
+    name: 'Lewis',
+    detail: 'Recovery · 4h',
+    viewers: [
+      { id: 'rhea', name: 'Rhea' },
+      { id: 'isla', name: 'Isla' },
+    ],
+  },
+  {
+    id: 'kamau',
+    name: 'Kamau',
+    detail: '5 km run · 5h',
+    viewers: [
+      { id: 'zuri', name: 'Zuri' },
+      { id: 'drew', name: 'Drew' },
+      { id: 'nina', name: 'Nina' },
+      { id: 'tariq', name: 'Tariq' },
+    ],
+  },
 ];
 
 const POSTS: Post[] = [
@@ -168,22 +197,29 @@ export function CommunityFeed() {
 
       {visibleStories.length ? (
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.storyList}>
-          {visibleStories.map((story) => (
-            <Pressable
-              key={story.id}
-              onPress={() => requireGuidelines(() => Alert.alert(story.name, story.detail))}
-              accessibilityRole="button"
-              accessibilityLabel={`${story.name}, ${story.detail}`}
-              style={styles.story}>
-              <View style={styles.storyRing}>
-                <View style={styles.storyAvatar}>
-                  <AppText variant="title" tone="primary">{story.name[0]}</AppText>
+          {visibleStories.map((story) => {
+            const storySummary = summarizeStoryViewers(story.viewers);
+            return (
+              <Pressable
+                key={story.id}
+                onPress={() => requireGuidelines(() => Alert.alert(
+                  story.name,
+                  `${story.detail}\n\nViewed by ${storySummary.recent.join(', ')}${storySummary.total > storySummary.recent.length ? ` +${storySummary.total - storySummary.recent.length} more` : ''}\nExpires in 24 hours`,
+                ))}
+                accessibilityRole="button"
+                accessibilityLabel={`${story.name}, ${story.detail}, ${storySummary.total} viewers`}
+                style={styles.story}>
+                <View style={styles.storyRing}>
+                  <View style={styles.storyAvatar}>
+                    <AppText variant="title" tone="primary">{story.name[0]}</AppText>
+                  </View>
                 </View>
-              </View>
-              <AppText variant="caption" numberOfLines={1}>{story.name}</AppText>
-              <AppText variant="caption" tone="muted" numberOfLines={1}>{story.detail}</AppText>
-            </Pressable>
-          ))}
+                <AppText variant="caption" numberOfLines={1}>{story.name}</AppText>
+                <AppText variant="caption" tone="muted" numberOfLines={1}>{story.detail}</AppText>
+                <AppText variant="caption" tone="muted">{storySummary.total} viewers</AppText>
+              </Pressable>
+            );
+          })}
         </ScrollView>
       ) : (
         <AppText variant="bodySmall" tone="secondary">No moments from your circle yet.</AppText>

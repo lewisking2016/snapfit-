@@ -7,6 +7,7 @@ import {
   filterVisibleCommunityItems,
   removeCommunityId,
   summarizeCircleAssignments,
+  summarizeStoryViewers,
 } from './community.ts';
 
 const items = [
@@ -64,4 +65,15 @@ test('assigns and summarizes friend circles', () => {
     family: 1,
     office: 0,
   });
+});
+
+test('summarizes story viewers and expires values', () => {
+  const summary = summarizeStoryViewers([
+    { id: 'u1', name: 'Amina' },
+    { id: 'u2', name: 'Lewis' },
+    { id: 'u3', name: 'Kamau' },
+  ]);
+
+  assert.deepEqual(summary.total, 3);
+  assert.deepEqual(summary.recent, ['Amina', 'Lewis', 'Kamau']);
 });
